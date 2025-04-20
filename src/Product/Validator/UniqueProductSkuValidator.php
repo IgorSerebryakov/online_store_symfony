@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Validator\Product;
+namespace App\Product\Validator;
 
-use App\Entity\Product;
-use App\Repository\ProductRepository;
+use App\Product\Entity\Product;
+use App\Product\Repository\ProductRepository;
 use Webmozart\Assert\Assert;
 
 class UniqueProductSkuValidator

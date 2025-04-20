@@ -1,17 +1,14 @@
 <?php
 
-namespace App\Controller\Product;
+namespace App\Product\Controller;
 
-use App\DTO\Product\CreateProductDto;
-use App\DTO\Product\UpdateProductDto;
-use App\Entity\Product;
-use App\Service\Product\CreateProductService;
-use App\Service\Product\UpdateProductService;
+use App\Product\DTO\UpdateProductDto;
+use App\Product\Entity\Product;
+use App\Product\Service\UpdateProductService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/product')]
@@ -29,7 +26,8 @@ class UpdateProductAction extends AbstractController
             $product->getDescription(),
             $product->getPrice(),
             $product->getQuantity(),
-            $product->isActive()
+            $product->isActive(),
+            $product->getCategory()->getId()
         );
 
         foreach ($request->toArray() as $property => $value) {

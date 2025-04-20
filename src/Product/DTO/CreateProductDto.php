@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTO\Product;
+namespace App\Product\DTO;
 
 class CreateProductDto
 {
@@ -11,8 +11,10 @@ class CreateProductDto
 
         public string $price,
 
+        public ?int $categoryId = null,
+
         public int $quantity = 0,
 
-        public bool $isActive = false
+        public bool $isActive = false,
     ) {}
 }

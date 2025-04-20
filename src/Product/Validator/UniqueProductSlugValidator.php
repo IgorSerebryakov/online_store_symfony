@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Validator\Product;
+namespace App\Product\Validator;
 
-use App\Entity\Product;
-use App\Repository\ProductRepository;
+use App\Product\Entity\Product;
+use App\Product\Repository\ProductRepository;
 use Webmozart\Assert\Assert;
 
 class UniqueProductSlugValidator
@@ -15,7 +15,7 @@ class UniqueProductSlugValidator
     {
         $existingProduct = $this->productRepository->findBySlug($slug);
 
-        if (!is_null($existingProduct) && $existingProduct->getId() !== $product->getId()) {
+        if (!is_null($existingProduct) && $existingProduct !== $product) {
             $existingSlug = $existingProduct->getSlug();
 
             Assert::notEq(

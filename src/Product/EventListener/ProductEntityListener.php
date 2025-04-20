@@ -1,10 +1,10 @@
 <?php
 
-namespace App\EventListener\Product;
+namespace App\Product\EventListener;
 
-use App\Entity\Product;
-use App\Validator\Product\UniqueProductSkuValidator;
-use App\Validator\Product\UniqueProductSlugValidator;
+use App\Product\Entity\Product;
+use App\Product\Validator\UniqueProductSkuValidator;
+use App\Product\Validator\UniqueProductSlugValidator;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
 use Doctrine\ORM\Events;
 use Doctrine\Persistence\Event\LifecycleEventArgs;

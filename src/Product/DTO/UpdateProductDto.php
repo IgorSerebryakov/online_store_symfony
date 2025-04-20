@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTO\Product;
+namespace App\Product\DTO;
 
 class UpdateProductDto
 {
@@ -13,7 +13,9 @@ class UpdateProductDto
 
         public int $quantity,
 
-        public bool $isActive
+        public bool $isActive,
+
+        public ?int $categoryId,
     ) {}
 
     public function toArray(): array
@@ -24,6 +26,7 @@ class UpdateProductDto
             'price' => $this->price,
             'quantity' => $this->quantity,
             'isActive' => $this->isActive,
+            'category' => $this->categoryId,
         ];
     }
 }

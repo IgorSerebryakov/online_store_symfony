@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Controller\Product;
+namespace App\Product\Controller;
 
-use App\DTO\Product\CreateProductDto;
-use App\Service\Product\CreateProductService;
+use App\Product\DTO\CreateProductDto;
+use App\Product\Service\CreateProductService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;

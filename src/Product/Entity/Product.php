@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace App\Entity;
+namespace App\Product\Entity;
 
-use App\Repository\ProductRepository;
+use App\Category\Entity\Category;
+use App\Product\Repository\ProductRepository;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Webmozart\Assert\Assert;
 
@@ -89,12 +89,17 @@ class Product
     )]
     private DateTimeImmutable $updatedAt;
 
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    #[ORM\JoinColumn(options: ['comment' => 'Категория товара'])]
+    private ?Category $category;
+
     private function __construct(
         string $name,
         ?string $description,
         string $price,
         int $quantity,
         bool $isActive,
+        ?Category $category,
     )
     {
         $this->setName($name);
@@ -102,6 +107,7 @@ class Product
         $this->setPrice($price);
         $this->setQuantity($quantity);
         $this->isActive = $isActive;
+        $this->category = $category;
 
         $this->createdAt = new DateTimeImmutable();
         $this->updatedAt = new DateTimeImmutable();
@@ -113,6 +119,7 @@ class Product
         string $price,
         int $quantity,
         bool $isActive,
+        ?Category $category = null,
     ): self
     {
         return new self(
@@ -120,7 +127,8 @@ class Product
             $description,
             $price,
             $quantity,
-            $isActive
+            $isActive,
+            $category
         );
     }
 
@@ -130,13 +138,16 @@ class Product
         ?string $description,
         string $price,
         int $quantity,
-        bool $isActive)
+        bool $isActive,
+        ?Category $category = null,
+    )
     {
         $product->setName($name);
         $product->setDescription($description);
         $product->updatePrice($price);
         $product->setQuantity($quantity);
         $product->isActive = $isActive;
+        $product->category = $category;
 
         return $product;
     }
@@ -254,5 +265,10 @@ class Product
         $this->sku = $sku;
 
         return $sku;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
     }
 }

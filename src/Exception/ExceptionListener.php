@@ -1,6 +1,6 @@
 <?php
 
-namespace App\EventListener\Exception;
+namespace App\Exception;
 
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -15,7 +15,7 @@ class ExceptionListener
     public function __invoke(ExceptionEvent $event): void
     {
         $exception = $event->getThrowable();
-
+        dd($exception);
         $message = [
             'message' => $exception->getMessage(),
             'code' => $exception->getCode(),
