@@ -8,22 +8,26 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 use Webmozart\Assert\Assert;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 class Category
 {
+    #[Groups('product_show')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: "IDENTITY")]
     #[ORM\Column]
     private int $id;
 
+    #[Groups('product_show')]
     #[ORM\Column(
         length: 255,
         options: ['comment' => 'Наименование категории']
     )]
     private string $name;
 
+    #[Groups('product_show')]
     #[ORM\Column(
         type: Types::TEXT,
         nullable: true,

@@ -11,9 +11,9 @@ class UniqueProductSkuValidator
     public function __construct(private ProductRepository $productRepository)
     {}
 
-    public function validate(string $slug, Product $product): void
+    public function validate(string $sku, Product $product): void
     {
-        $existingProduct = $this->productRepository->findBySku($slug);
+        $existingProduct = $this->productRepository->findBySku($sku);
 
         if (!is_null($existingProduct)) {
             $existingSku = $existingProduct->getSku();

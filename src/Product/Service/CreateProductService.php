@@ -6,12 +6,14 @@ use App\Category\Repository\CategoryRepository;
 use App\Product\DTO\CreateProductDto;
 use App\Product\Entity\Product;
 use App\Product\Repository\ProductRepository;
+use Symfony\Contracts\Cache\TagAwareCacheInterface;
 
 readonly class CreateProductService
 {
     public function __construct(
-        private ProductRepository $repository,
-        private CategoryRepository $categoryRepository,
+        private ProductRepository      $repository,
+        private CategoryRepository     $categoryRepository,
+        private TagAwareCacheInterface $cache,
     ) {}
 
     public function create(CreateProductDto $createProductDto): Product
@@ -32,6 +34,8 @@ readonly class CreateProductService
         );
 
         $this->repository->add($product);
+
+        $this->cache->invalidateTags(['products']);
 
         return $product;
     }

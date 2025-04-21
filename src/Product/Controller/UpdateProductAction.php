@@ -27,7 +27,7 @@ class UpdateProductAction extends AbstractController
             $product->getPrice(),
             $product->getQuantity(),
             $product->isActive(),
-            $product->getCategory()->getId()
+            $product->getCategory()?->getId()
         );
 
         foreach ($request->toArray() as $property => $value) {

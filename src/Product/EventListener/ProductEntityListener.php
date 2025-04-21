@@ -3,6 +3,7 @@
 namespace App\Product\EventListener;
 
 use App\Product\Entity\Product;
+use App\Product\Service\SkuGenerator;
 use App\Product\Validator\UniqueProductSkuValidator;
 use App\Product\Validator\UniqueProductSlugValidator;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
@@ -16,6 +17,7 @@ class ProductEntityListener
 {
     public function __construct(
         private SluggerInterface           $slugger,
+        private SkuGenerator               $skuGenerator,
         private UniqueProductSlugValidator $uniqueProductSlugValidator,
         private UniqueProductSkuValidator  $uniqueProductSkuValidator
     )
@@ -24,7 +26,7 @@ class ProductEntityListener
     public function prePersist(Product $product, LifecycleEventArgs $args)
     {
         $slug = $product->computeSlug($this->slugger);
-        $sku = $product->computeSku();
+        $sku = $product->computeSku($this->skuGenerator);
 
         $this->uniqueProductSlugValidator->validate($slug, $product);
         $this->uniqueProductSkuValidator->validate($sku, $product);

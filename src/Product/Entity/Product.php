@@ -4,9 +4,12 @@ namespace App\Product\Entity;
 
 use App\Category\Entity\Category;
 use App\Product\Repository\ProductRepository;
+use App\Product\Service\SkuGenerator;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Serializer\Attribute\Ignore;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Webmozart\Assert\Assert;
 
@@ -14,17 +17,20 @@ use Webmozart\Assert\Assert;
 #[ORM\HasLifecycleCallbacks]
 class Product
 {
+    #[Groups('product_show')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     #[ORM\Column]
     private int $id;
 
+    #[Groups('product_show')]
     #[ORM\Column(
         length: 255,
         options: ['comment' => 'Название товара']
     )]
     private string $name;
 
+    #[Groups('product_show')]
     #[ORM\Column(
         length: 255,
         unique: true,
@@ -32,6 +38,7 @@ class Product
     )]
     private string $slug;
 
+    #[Groups('product_show')]
     #[ORM\Column(
         type: Types::TEXT,
         nullable: true,
@@ -39,6 +46,7 @@ class Product
     )]
     private ?string $description;
 
+    #[Groups('product_show')]
     #[ORM\Column(
         type: Types::DECIMAL,
         precision: 10,
@@ -56,6 +64,7 @@ class Product
     )]
     private ?string $oldPrice = null;
 
+    #[Groups('product_show')]
     #[ORM\Column(
         length: 100,
         unique: true,
@@ -63,6 +72,7 @@ class Product
     )]
     private int $sku;
 
+    #[Groups('product_show')]
     #[ORM\Column(
         options: [
             'comment' => 'Количество товара на складе',
@@ -89,6 +99,7 @@ class Product
     )]
     private DateTimeImmutable $updatedAt;
 
+    #[Groups('product_show')]
     #[ORM\ManyToOne(inversedBy: 'products')]
     #[ORM\JoinColumn(options: ['comment' => 'Категория товара'])]
     private ?Category $category;
@@ -259,9 +270,9 @@ class Product
         return $slug;
     }
 
-    public function computeSku()
+    public function computeSku(SkuGenerator $skuGenerator)
     {
-        $sku = random_int(1000, 9999);
+        $sku = $skuGenerator->generate();
         $this->sku = $sku;
 
         return $sku;
