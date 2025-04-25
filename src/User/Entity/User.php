@@ -4,18 +4,19 @@ namespace App\User\Entity;
 
 use App\User\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Uid\Uuid;
 use Webmozart\Assert\Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
-class User
+class User implements PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\Column]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
-    private Uuid $id;
+    private string $id;
 
     #[ORM\Column(
         length: 255,
@@ -49,7 +50,7 @@ class User
         $this->password = $password;
     }
 
-    public function create(
+    public static function create(
         string $email,
         string $password,
         ?string $phone = null
@@ -58,7 +59,20 @@ class User
         return new self($email, $password, $phone);
     }
 
-    public function getId(): int
+    public function update(
+        string $email,
+        string $password,
+        string $phone
+    )
+    {
+        $this->setEmail($email);
+        $this->setPassword($password);
+        $this->setPhone($phone);
+
+        return $this;
+    }
+
+    public function getId(): string
     {
         return $this->id;
     }
@@ -81,6 +95,13 @@ class User
         return $this->password;
     }
 
+    private function setPassword(string $password): static
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
     public function getPhone(): ?string
     {
         return $this->phone;
@@ -89,9 +110,10 @@ class User
     private function setPhone(?string $phone): static
     {
         if (!is_null($phone)) {
-            Assert::numeric($phone, 'Телефон должен быть числом. Получено: %s');
-            Assert::maxLength($phone, 11, 'Телефон должен содержать 11 цифр. Получено: %s');
-            Assert::startsWith($phone, '7', 'Телефон должен начинаться с цифры "7", получено: %s');
+            Assert::regex(
+                $phone,
+                '/^7\d{10}$/',
+                'Телефон должен начинаться с "7" и содержать 11 цифр. Получено: %s');
         }
 
         $this->phone = $phone;

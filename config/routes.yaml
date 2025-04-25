@@ -10,3 +10,9 @@ category_controllers:
         namespace: App\Category\Controller
     type: attribute
 
+user_controllers:
+    resource:
+        path: ../src/User/Controller/
+        namespace: App\User\Controller
+    type: attribute
+

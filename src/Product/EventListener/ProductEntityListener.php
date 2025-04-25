@@ -14,7 +14,7 @@ use Symfony\Contracts\Cache\TagAwareCacheInterface;
 
 #[AsEntityListener(event: Events::prePersist, entity: Product::class)]
 #[AsEntityListener(event: Events::preUpdate, entity: Product::class)]
-class ProductEntityListener
+readonly class ProductEntityListener
 {
     public function __construct(
         private SluggerInterface           $slugger,
@@ -25,7 +25,7 @@ class ProductEntityListener
     )
     {}
 
-    public function prePersist(Product $product, LifecycleEventArgs $args)
+    public function prePersist(Product $product, LifecycleEventArgs $args): void
     {
         $slug = $product->computeSlug($this->slugger);
         $sku = $product->computeSku($this->skuGenerator);
@@ -36,7 +36,7 @@ class ProductEntityListener
         $this->cache->invalidateTags(['products']);
     }
 
-    public function preUpdate(Product $product, LifecycleEventArgs $args)
+    public function preUpdate(Product $product, LifecycleEventArgs $args): void
     {
         $slug = $product->computeSlug($this->slugger);
 
