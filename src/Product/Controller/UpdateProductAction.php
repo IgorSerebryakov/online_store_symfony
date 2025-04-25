@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/product')]
 class UpdateProductAction extends AbstractController
 {
-    #[Route('/{id}', name: 'updateProduct', methods: ['PATCH'])]
+    #[Route('/{slug}', name: 'product_update', methods: ['PATCH'])]
     public function __invoke(
         Request              $request,
         Product              $product,

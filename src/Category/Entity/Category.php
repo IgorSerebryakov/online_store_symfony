@@ -14,37 +14,31 @@ use Webmozart\Assert\Assert;
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 class Category
 {
-    #[Groups('product_show')]
+    #[Groups(['product_show', 'category_show'])]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: "IDENTITY")]
     #[ORM\Column]
     private int $id;
 
-    #[Groups('product_show')]
+    #[Groups(['product_show', 'category_show'])]
     #[ORM\Column(
         length: 255,
         options: ['comment' => 'Наименование категории']
     )]
     private string $name;
 
-    #[Groups('product_show')]
+    #[Groups(['product_show', 'category_show'])]
     #[ORM\Column(
         type: Types::TEXT,
         nullable: true,
         options: ['comment' => 'Описание категории']
     )]
-    private ?string $description = null;
+    private ?string $description;
 
     #[ORM\Column(
         options: ['comment' => 'Флаг активности категории (отображается ли на сайте)']
     )]
     private bool $isActive;
-
-    /**
-     * @var Collection<int, Product>
-     */
-    #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'category')]
-    private Collection $products;
 
     private function __construct(
         string $name,
@@ -71,12 +65,12 @@ class Category
         );
     }
 
-    public function update(
+    public static function update(
         Category $category,
         string $name,
         ?string $description,
         bool $isActive
-    )
+    ): Category
     {
         $category->setName($name);
         $category->setDescription($description);
@@ -120,23 +114,5 @@ class Category
     private function setIsActive(bool $isActive): void
     {
         $this->isActive = $isActive;
-    }
-
-    /**
-     * @return Collection<int, Product>
-     */
-    public function getProducts(): Collection
-    {
-        return $this->products;
-    }
-
-    public function addProduct(Product $product): static
-    {
-        if (!$this->products->contains($product)) {
-            $this->products->add($product);
-            $product->setCategory($this);
-        }
-
-        return $this;
     }
 }

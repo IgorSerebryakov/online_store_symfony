@@ -18,12 +18,6 @@ readonly class UpdateProductService
 
     public function update(Product $product, UpdateProductDto $updateProductDto): Product
     {
-        if (null === $updateProductDto->categoryId) {
-            $category = null;
-        } else {
-            $category = $this->categoryRepository->find($updateProductDto->categoryId);
-        }
-
         $product::update(
             $product,
             $updateProductDto->name,
@@ -31,10 +25,15 @@ readonly class UpdateProductService
             $updateProductDto->price,
             $updateProductDto->quantity,
             $updateProductDto->isActive,
-            $category
         );
 
-        $this->repository->add($product);
+        if (null === $updateProductDto->categoryId) {
+            $category = null;
+        } else {
+            $category = $this->categoryRepository->find($updateProductDto->categoryId);
+        }
+
+        $this->repository->addProduct($product);
 
         $this->cache->invalidateTags(['products']);
 

@@ -101,7 +101,7 @@ class Product
 
     #[Groups('product_show')]
     #[ORM\ManyToOne(inversedBy: 'products')]
-    #[ORM\JoinColumn(options: ['comment' => 'Категория товара'])]
+    #[ORM\JoinColumn(onDelete: 'SET NULL', options: ['comment' => 'Категория товара'])]
     private ?Category $category;
 
     private function __construct(
@@ -130,7 +130,6 @@ class Product
         string $price,
         int $quantity,
         bool $isActive,
-        ?Category $category = null,
     ): self
     {
         return new self(
@@ -139,7 +138,7 @@ class Product
             $price,
             $quantity,
             $isActive,
-            $category
+            null
         );
     }
 
@@ -150,15 +149,13 @@ class Product
         string $price,
         int $quantity,
         bool $isActive,
-        ?Category $category = null,
-    )
+    ): Product
     {
         $product->setName($name);
         $product->setDescription($description);
         $product->updatePrice($price);
         $product->setQuantity($quantity);
         $product->isActive = $isActive;
-        $product->category = $category;
 
         return $product;
     }
@@ -276,6 +273,16 @@ class Product
         $this->sku = $sku;
 
         return $sku;
+    }
+
+    public function addCategory(Category $category): void
+    {
+        $this->category = $category;
+    }
+
+    public function removeCategory(): void
+    {
+        $this->category = null;
     }
 
     public function getCategory(): ?Category

@@ -10,6 +10,7 @@ use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
 use Doctrine\ORM\Events;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Contracts\Cache\TagAwareCacheInterface;
 
 #[AsEntityListener(event: Events::prePersist, entity: Product::class)]
 #[AsEntityListener(event: Events::preUpdate, entity: Product::class)]
@@ -19,7 +20,8 @@ class ProductEntityListener
         private SluggerInterface           $slugger,
         private SkuGenerator               $skuGenerator,
         private UniqueProductSlugValidator $uniqueProductSlugValidator,
-        private UniqueProductSkuValidator  $uniqueProductSkuValidator
+        private UniqueProductSkuValidator  $uniqueProductSkuValidator,
+        private TagAwareCacheInterface     $cache
     )
     {}
 
@@ -30,6 +32,8 @@ class ProductEntityListener
 
         $this->uniqueProductSlugValidator->validate($slug, $product);
         $this->uniqueProductSkuValidator->validate($sku, $product);
+
+        $this->cache->invalidateTags(['products']);
     }
 
     public function preUpdate(Product $product, LifecycleEventArgs $args)
@@ -37,5 +41,7 @@ class ProductEntityListener
         $slug = $product->computeSlug($this->slugger);
 
         $this->uniqueProductSlugValidator->validate($slug, $product);
+
+        $this->cache->invalidateTags(['products']);
     }
 }
