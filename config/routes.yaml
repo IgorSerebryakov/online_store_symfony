@@ -19,3 +19,5 @@ user_controllers:
     type: attribute
     prefix: /api
 
+login:
+    path: /api/login
