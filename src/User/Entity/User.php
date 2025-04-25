@@ -4,6 +4,7 @@ namespace App\User\Entity;
 
 use App\User\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Uuid;
 use Webmozart\Assert\Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -11,9 +12,10 @@ use Webmozart\Assert\Assert;
 class User
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: 'UUID')]
     #[ORM\Column]
-    private int $id;
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
+    private Uuid $id;
 
     #[ORM\Column(
         length: 255,
