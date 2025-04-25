@@ -27,12 +27,12 @@ readonly class UserEntityListener
 
     public function __invoke(User $user, LifecycleEventArgs $args): void
     {
+        $this->uniqueUserEmailValidator->validate($user->getEmail(), $user);
+
         $user->update(
             $user->getEmail(),
             $this->hasher->hashPassword($user, $user->getPassword()),
             $user->getPhone()
         );
-
-        $this->uniqueUserEmailValidator->validate($user->getEmail(), $user);
     }
 }
