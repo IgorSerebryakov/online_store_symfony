@@ -9,4 +9,6 @@ class CreateUserDTO
     public string $password;
 
     public string $phone;
+
+    public array $roles = [];
 }

@@ -21,3 +21,7 @@ user_controllers:
 
 login:
     path: /api/login
+
+api_refresh_token:
+    path: /api/auth/refresh
+

@@ -2,12 +2,14 @@
 
 namespace App\User\Entity;
 
+use App\User\Enum\UserRole;
 use App\User\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Serializer\Attribute\Ignore;
 use Webmozart\Assert\Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -27,6 +29,7 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     )]
     private string $email;
 
+    #[Ignore]
     #[ORM\Column(
         length: 255,
         options: ['comment' => 'Захэшированный пароль пользователя']
@@ -40,36 +43,41 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     )]
     private ?string $phone = null;
 
+    #[ORM\Column(
+        type: 'json',
+        options: ['comment' => 'Роли пользователя']
+    )]
+    private array $roles = [];
+
     private function __construct(
         string $email,
-        string $password,
-        ?string $phone = null
+        ?string $phone = null,
+        array $roles = []
     )
     {
         $this->setEmail($email);
         $this->setPhone($phone);
-
-        $this->password = $password;
+        $this->setRoles($roles);
     }
 
     public static function create(
         string $email,
-        string $password,
-        ?string $phone = null
+        ?string $phone = null,
+        array $roles = []
     ): User
     {
-        return new self($email, $password, $phone);
+        return new self($email, $phone, $roles);
     }
 
     public function update(
         string $email,
-        string $password,
-        string $phone
-    )
+        string $phone,
+        array $roles = []
+    ): User
     {
         $this->setEmail($email);
-        $this->setPassword($password);
         $this->setPhone($phone);
+        $this->setRoles($roles);
 
         return $this;
     }
@@ -97,11 +105,9 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
         return $this->password;
     }
 
-    private function setPassword(string $password): static
+    public function setPassword(string $password, UserPasswordHasherInterface $hasher): void
     {
-        $this->password = $password;
-
-        return $this;
+        $this->password = $hasher->hashPassword($this, $password);
     }
 
     public function getPhone(): ?string
@@ -123,11 +129,28 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
         return $this;
     }
 
-    public function getRoles(): array
+    private function setRoles(array $roles): void
     {
-        return ['ROLE_USER'];
+        foreach ($roles as $role) {
+            Assert::notNull(
+                UserRole::tryFrom($role),
+                "Роли $role не существует"
+            );
+        }
+
+        $this->roles = $roles;
+
+        if (!in_array(UserRole::USER->value, $this->roles)) {
+            $this->roles[] = UserRole::USER->value;
+        }
     }
 
+    public function getRoles(): array
+    {
+        return $this->roles;
+    }
+
+    #[Ignore]
     public function getUserIdentifier(): string
     {
         return $this->email;

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2565e113287fd4a67d3b83457de117cd",
+    "content-hash": "08f666fc3985b0bcfffb40958a3c9deb",
     "packages": [
         {
             "name": "carbonphp/carbon-doctrine-types",
@@ -1145,21 +1145,21 @@
         },
         {
             "name": "doctrine/persistence",
-            "version": "4.0.0",
+            "version": "3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/persistence.git",
-                "reference": "45004aca79189474f113cbe3a53847c2115a55fa"
+                "reference": "0ea965320cec355dba75031c1b23d4c78362e3ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/persistence/zipball/45004aca79189474f113cbe3a53847c2115a55fa",
-                "reference": "45004aca79189474f113cbe3a53847c2115a55fa",
+                "url": "https://api.github.com/repos/doctrine/persistence/zipball/0ea965320cec355dba75031c1b23d4c78362e3ff",
+                "reference": "0ea965320cec355dba75031c1b23d4c78362e3ff",
                 "shasum": ""
             },
             "require": {
                 "doctrine/event-manager": "^1 || ^2",
-                "php": "^8.1",
+                "php": "^7.2 || ^8.0",
                 "psr/cache": "^1.0 || ^2.0 || ^3.0"
             },
             "conflict": {
@@ -1167,10 +1167,11 @@
             },
             "require-dev": {
                 "doctrine/coding-standard": "^12",
+                "doctrine/common": "^3.0",
                 "phpstan/phpstan": "1.12.7",
                 "phpstan/phpstan-phpunit": "^1",
                 "phpstan/phpstan-strict-rules": "^1.1",
-                "phpunit/phpunit": "^9.6",
+                "phpunit/phpunit": "^8.5.38 || ^9.5",
                 "symfony/cache": "^4.4 || ^5.4 || ^6.0 || ^7.0"
             },
             "type": "library",
@@ -1220,7 +1221,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/persistence/issues",
-                "source": "https://github.com/doctrine/persistence/tree/4.0.0"
+                "source": "https://github.com/doctrine/persistence/tree/3.4.0"
             },
             "funding": [
                 {
@@ -1236,7 +1237,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-11-01T21:49:07+00:00"
+            "time": "2024-10-30T19:48:12+00:00"
         },
         {
             "name": "doctrine/sql-formatter",
@@ -1292,6 +1293,86 @@
                 "source": "https://github.com/doctrine/sql-formatter/tree/1.5.2"
             },
             "time": "2025-01-24T11:45:48+00:00"
+        },
+        {
+            "name": "gesdinet/jwt-refresh-token-bundle",
+            "version": "v1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/markitosgv/JWTRefreshTokenBundle.git",
+                "reference": "a47a373ec0838394bd9c1642c51be39b9c41da84"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/markitosgv/JWTRefreshTokenBundle/zipball/a47a373ec0838394bd9c1642c51be39b9c41da84",
+                "reference": "a47a373ec0838394bd9c1642c51be39b9c41da84",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/persistence": "^1.3.3|^2.0|^3.0",
+                "lexik/jwt-authentication-bundle": "^2.0|^3.0",
+                "php": ">=7.4",
+                "symfony/config": "^5.4|^6.0|^7.0",
+                "symfony/console": "^5.4|^6.0|^7.0",
+                "symfony/dependency-injection": "^5.4|^6.0|^7.0",
+                "symfony/deprecation-contracts": "^2.1|^3.0",
+                "symfony/event-dispatcher": "^5.4|^6.0|^7.0",
+                "symfony/http-foundation": "^5.4|^6.0|^7.0",
+                "symfony/http-kernel": "^5.4|^6.0|^7.0",
+                "symfony/polyfill-php80": "^1.15",
+                "symfony/property-access": "^5.4|^6.0|^7.0",
+                "symfony/security-bundle": "^5.4|^6.0|^7.0",
+                "symfony/security-core": "^5.4|^6.0|^7.0",
+                "symfony/security-http": "^5.4|^6.0|^7.0"
+            },
+            "conflict": {
+                "doctrine/mongodb-odm": "<2.2",
+                "doctrine/orm": "<2.7"
+            },
+            "require-dev": {
+                "doctrine/annotations": "^1.13|^2.0",
+                "doctrine/cache": "^1.11|^2.0",
+                "doctrine/mongodb-odm": "^2.2",
+                "doctrine/orm": "^2.7|^3.0",
+                "matthiasnoback/symfony-config-test": "^4.2|^5.0",
+                "matthiasnoback/symfony-dependency-injection-test": "^4.2|^5.0",
+                "phpunit/phpunit": "^9.5",
+                "symfony/cache": "^5.4|^6.0|^7.0",
+                "symfony/security-guard": "^5.4"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Gesdinet\\JWTRefreshTokenBundle\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marcos Gómez Vilches",
+                    "email": "marcos@gesdinet.com"
+                }
+            ],
+            "description": "Implements a refresh token system over Json Web Tokens in Symfony",
+            "keywords": [
+                "jwt refresh token bundle symfony json web"
+            ],
+            "support": {
+                "issues": "https://github.com/markitosgv/JWTRefreshTokenBundle/issues",
+                "source": "https://github.com/markitosgv/JWTRefreshTokenBundle/tree/v1.4.0"
+            },
+            "time": "2024-11-23T09:58:58+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -1620,7 +1701,7 @@
         },
         {
             "name": "illuminate/collections",
-            "version": "v12.10.1",
+            "version": "v12.10.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/collections.git",
@@ -1677,7 +1758,7 @@
         },
         {
             "name": "illuminate/conditionable",
-            "version": "v12.10.1",
+            "version": "v12.10.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/conditionable.git",
@@ -1723,7 +1804,7 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v12.10.1",
+            "version": "v12.10.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
@@ -1771,7 +1852,7 @@
         },
         {
             "name": "illuminate/macroable",
-            "version": "v12.10.1",
+            "version": "v12.10.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/macroable.git",
@@ -1817,7 +1898,7 @@
         },
         {
             "name": "illuminate/support",
-            "version": "v12.10.1",
+            "version": "v12.10.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
@@ -7831,21 +7912,21 @@
         },
         {
             "name": "symfony/maker-bundle",
-            "version": "v1.62.1",
+            "version": "v1.63.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/maker-bundle.git",
-                "reference": "468ff2708200c95ebc0d85d3174b6c6711b8a590"
+                "reference": "69478ab39bc303abfbe3293006a78b09a8512425"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/468ff2708200c95ebc0d85d3174b6c6711b8a590",
-                "reference": "468ff2708200c95ebc0d85d3174b6c6711b8a590",
+                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/69478ab39bc303abfbe3293006a78b09a8512425",
+                "reference": "69478ab39bc303abfbe3293006a78b09a8512425",
                 "shasum": ""
             },
             "require": {
                 "doctrine/inflector": "^2.0",
-                "nikic/php-parser": "^4.18|^5.0",
+                "nikic/php-parser": "^5.0",
                 "php": ">=8.1",
                 "symfony/config": "^6.4|^7.0",
                 "symfony/console": "^6.4|^7.0",
@@ -7903,7 +7984,7 @@
             ],
             "support": {
                 "issues": "https://github.com/symfony/maker-bundle/issues",
-                "source": "https://github.com/symfony/maker-bundle/tree/v1.62.1"
+                "source": "https://github.com/symfony/maker-bundle/tree/v1.63.0"
             },
             "funding": [
                 {
@@ -7919,7 +8000,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-01-15T00:21:40+00:00"
+            "time": "2025-04-26T01:41:37+00:00"
         },
         {
             "name": "symfony/process",
