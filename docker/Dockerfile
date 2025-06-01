@@ -27,12 +27,19 @@ RUN apk update \
         curl \
         wget \
         bash \
-        librdkafka-dev
+        supervisor \
+        rabbitmq-c-dev \
+        cmake \
+        make
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
 
-RUN apk add --no-cache linux-headers
+RUN apk add --no-cache linux-headers rabbitmq-c
+
+# Установка AMQP
+RUN pecl install amqp \
+    && docker-php-ext-enable amqp
 
 # Install PHP extensions
 RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/

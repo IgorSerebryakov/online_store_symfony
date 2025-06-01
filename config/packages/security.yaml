@@ -28,8 +28,9 @@ security:
         ROLE_ADMIN: [ROLE_PRODUCT_ADMIN, ROLE_CATEGORY_ADMIN, ROLE_USER_ADMIN]
 
     access_control:
-        - { path: ^/api/(login|token/refresh|users), roles: PUBLIC_ACCESS }
-        - { path: ^/api,                       roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/(login|token/refresh|users|register),                        roles: PUBLIC_ACCESS }
+        - { path: ^/api/[0-9a-f-]+/(confirm|sendConfirmationCode),                   roles: PUBLIC_ACCESS }
+        - { path: ^/api,                                                             roles: IS_AUTHENTICATED_FULLY }
 
 when@test:
     security:

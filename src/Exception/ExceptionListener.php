@@ -15,7 +15,7 @@ class ExceptionListener
     public function __invoke(ExceptionEvent $event): void
     {
         $exception = $event->getThrowable();
-        dd($exception);
+        #dd($exception);
         $message = [
             'message' => $exception->getMessage(),
             'code' => $exception->getCode(),

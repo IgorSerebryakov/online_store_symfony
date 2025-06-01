@@ -6,7 +6,6 @@ use App\User\Enum\UserRole;
 use App\User\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Attribute\Ignore;
@@ -49,15 +48,23 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     )]
     private array $roles = [];
 
+    #[ORM\Column(
+        options: ['default' => false, 'comment' => 'Флаг, определяющий, активирован ли пользователь']
+    )]
+    private bool $isConfirmed;
+
     private function __construct(
         string $email,
         ?string $phone = null,
-        array $roles = []
+        array $roles = [],
+        bool $isConfirmed = false
     )
     {
         $this->setEmail($email);
         $this->setPhone($phone);
         $this->setRoles($roles);
+
+        $this->isConfirmed = $isConfirmed;
     }
 
     public static function create(
@@ -115,7 +122,7 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
         return $this->phone;
     }
 
-    private function setPhone(?string $phone): static
+    private function setPhone(?string $phone): void
     {
         if (!is_null($phone)) {
             Assert::regex(
@@ -125,8 +132,6 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
         }
 
         $this->phone = $phone;
-
-        return $this;
     }
 
     private function setRoles(array $roles): void
@@ -159,5 +164,15 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     public function eraseCredentials(): void
     {
         // TODO: Implement eraseCredentials() method.
+    }
+
+    public function isConfirmed(): ?bool
+    {
+        return $this->isConfirmed;
+    }
+
+    public function confirm(): void
+    {
+        $this->isConfirmed = true;
     }
 }

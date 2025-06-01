@@ -4,11 +4,11 @@ namespace App\User\DTO;
 
 class CreateUserDTO
 {
-    public string $email;
+    public function __construct(
+        public string $email,
+        public string $password,
+        public string $phone,
+        public array $roles = []
+    ) {}
 
-    public string $password;
-
-    public string $phone;
-
-    public array $roles = [];
 }
