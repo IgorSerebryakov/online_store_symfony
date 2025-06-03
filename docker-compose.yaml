@@ -39,6 +39,23 @@ services:
     networks:
       - online_store
 
+  postgres_test:
+    image: postgres:15
+    ports:
+      - 15433:5432
+    container_name: 'online_store_db_test'
+    working_dir: /app
+    restart: always
+    environment:
+      POSTGRES_DB: 'online_store_test'
+      POSTGRES_USER: 'dbuser_test'
+      POSTGRES_PASSWORD: 'dbpwd_test'
+    volumes:
+      - dump:/app/dump
+      - postgresql_test:/var/lib/postgresql/data
+    networks:
+      - online_store
+
   redis:
     image: redis:7.0.0
     ports:
@@ -63,3 +80,4 @@ networks:
 volumes:
   dump:
   postgresql:
+  postgresql_test:

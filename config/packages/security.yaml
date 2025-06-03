@@ -12,6 +12,7 @@ security:
         api:
             pattern: ^/api
             stateless: true
+            security: true
             entry_point: jwt
             json_login:
                 check_path: /api/login
