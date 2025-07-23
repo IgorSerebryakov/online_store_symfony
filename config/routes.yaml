@@ -1,5 +1,27 @@
-controllers:
+product_controllers:
     resource:
-        path: ../src/Controller/
-        namespace: App\Controller
+        path: ../src/Product/Controller/
+        namespace: App\Product\Controller
     type: attribute
+    prefix: /api
+
+category_controllers:
+    resource:
+        path: ../src/Category/Controller/
+        namespace: App\Category\Controller
+    type: attribute
+    prefix: /api
+
+user_controllers:
+    resource:
+        path: ../src/User/Controller/
+        namespace: App\User\Controller
+    type: attribute
+    prefix: /api
+
+login:
+    path: /api/login
+
+api_refresh_token:
+    path: /api/auth/refresh
+

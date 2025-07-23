@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подтверждение регистрации</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background-color: #4f46e5;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+        }
+        .header img {
+            max-height: 50px;
+        }
+        .content {
+            padding: 30px;
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-top: none;
+        }
+        .code {
+            font-size: 32px;
+            letter-spacing: 5px;
+            text-align: center;
+            margin: 30px 0;
+            padding: 15px;
+            background-color: #f3f4f6;
+            border-radius: 6px;
+            color: #111827;
+            font-weight: bold;
+        }
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #4f46e5;
+            color: white !important;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 12px;
+            color: #6b7280;
+            text-align: center;
+        }
+        .divider {
+            height: 1px;
+            background-color: #e5e7eb;
+            margin: 25px 0;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <!-- Логотип можно заменить на ваш -->
+    <img src="https://via.placeholder.com/150x50?text=Online+Store" alt="Online Store">
+</div>
+
+<div class="content">
+    <h1 style="margin-top: 0;">Добро пожаловать в Online Store!</h1>
+
+    <p>Благодарим вас за регистрацию. Для завершения процесса, пожалуйста, подтвердите ваш email:</p>
+
+    <div class="code">{{ confirmation_code }}</div>
+
+    <p>Если вы не регистрировались в нашем магазине, пожалуйста, проигнорируйте это письмо.</p>
+</div>
+</body>
+</html>

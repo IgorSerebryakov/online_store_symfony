@@ -8,8 +8,12 @@ framework:
         # Other options include:
 
         # Redis
-        #app: cache.adapter.redis
-        #default_redis_provider: redis://localhost
+        app: cache.adapter.redis
+        default_redis_provider: "%env(resolve:REDIS_URL)%"
+        pools:
+            confirmation.codes:
+                adapter: cache.app
+                default_lifetime: 60 # 1 минута
 
         # APCu (not recommended with heavy random-write workloads as memory fragmentation can cause perf issues)
         #app: cache.adapter.apcu

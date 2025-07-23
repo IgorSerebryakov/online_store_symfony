@@ -1,0 +1,4 @@
+gesdinet_jwt_refresh_token:
+  refresh_token_class: App\Security\RefreshToken\Entity\RefreshToken
+  ttl: 2592000 # 1 месяц
+  single_use: true # Использование токена только 1 раз
